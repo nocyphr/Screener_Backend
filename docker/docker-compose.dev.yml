@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  api:
+    build: 
+      context: ./
+      dockerfile: docker.api.dockerfile
+      
+    ports:
+      - "8000:8000"
+#     depends_on:
+#       - db
+
+#   db:
+#     image: mysql:8.0
+#     environment:
+#       MYSQL_ROOT_PASSWORD: your_root_password
+#       MYSQL_DATABASE: your_db_name
+#       MYSQL_USER: your_user
+#       MYSQL_PASSWORD: your_password
+#     volumes:
+#       - db_data:/var/lib/mysql
+
+#   scraper:
+#     build: ./scraper
+#     depends_on:
+#       - db
+#     environment:
+#       SCRAPERAPI_KEY: your_scraperapi_key
+
+# volumes:
+#   db_data:
