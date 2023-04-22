@@ -8,6 +8,10 @@ services:
       
     ports:
       - "8000:8000"
+
+    volumes:
+      - ../src/api/api.py:/app/api.py
+      - ./assets/data.json:/app/data.json
 #     depends_on:
 #       - db
 
