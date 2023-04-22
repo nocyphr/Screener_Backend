@@ -7,7 +7,7 @@ I will fill this in tomorrow :D i am quite tired today
 
 
 # Structure- [Structure](#structure)
-
+```
 ├── db
 │   ├──data
 │   │   └──... # persist db data through compose volume mapping
@@ -23,3 +23,4 @@ I will fill this in tomorrow :D i am quite tired today
 │    │  └── api.py # just the barebones root api
 ├── README.md
 └── dev.sh # start your dev version of everything quickly using `bash dev.sh`
+```
