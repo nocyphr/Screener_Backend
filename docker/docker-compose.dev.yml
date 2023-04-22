@@ -23,6 +23,10 @@ services:
     image: mysql:oracle
     env_file: ./assets/db.env
     restart: always
+    # ports only exposed for manual checks via dbeaver
+    ports:
+    - "3306:3306"
+
     volumes:
       - ../db/data:/var/lib/mysql
     networks:
