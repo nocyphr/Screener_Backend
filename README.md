@@ -1,12 +1,12 @@
 - [About](#about)
-- [Structure- Structure](#structure--structure)
+- [Structure](#structure)
 
 
 # About
 I will fill this in tomorrow :D i am quite tired today
 
 
-# Structure- [Structure](#structure)
+# Structure
 ```
 ├── db
 │   ├──data
