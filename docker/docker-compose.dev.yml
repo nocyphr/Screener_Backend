@@ -5,25 +5,28 @@ services:
     build: 
       context: ./
       dockerfile: docker.api.dockerfile
-      
+    
+    # replace with expose:8000 as soon as traefik is setup
     ports:
-      - "8000:8000"
+      - "8000:8000" 
 
     volumes:
       - ../src/api/api.py:/app/api.py
       - ./assets/data.json:/app/data.json
-#     depends_on:
-#       - db
+    depends_on:
+      - db
+    networks:
+      - backend
 
-#   db:
-#     image: mysql:8.0
-#     environment:
-#       MYSQL_ROOT_PASSWORD: your_root_password
-#       MYSQL_DATABASE: your_db_name
-#       MYSQL_USER: your_user
-#       MYSQL_PASSWORD: your_password
-#     volumes:
-#       - db_data:/var/lib/mysql
+
+  db:
+    image: mysql:oracle
+    env_file: ./assets/db.env
+    volumes:
+      - ../db/data:/var/lib/mysql
+    networks:
+      - backend
+
 
 #   scraper:
 #     build: ./scraper
@@ -32,5 +35,5 @@ services:
 #     environment:
 #       SCRAPERAPI_KEY: your_scraperapi_key
 
-# volumes:
-#   db_data:
+networks:
+  backend:
