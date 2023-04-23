@@ -27,7 +27,8 @@ I will fill this in tomorrow :D i am quite tired today
 ```
 
 # TODOs
-- [ ] move data.json to db test-table
+- [x] move data.json to db test-table
+- [ ] write feature file for crud module
 - [ ] write feature file for api
 - [ ] write feature file for scraper
 - [ ] prepare misc-data (exchange-mapping yfinance suffix to broker exchange names, mapping exchanges to country, mapping countries to continents)
