@@ -42,7 +42,7 @@ services:
     env_file: ./assets/scraper.env
     volumes:
       - ../src/scraper/:/app/src
-      - .assets/data.json:/app/assets/data.json
+      - ./assets/data.json:/app/assets/data.json
 
 networks:
   backend:
