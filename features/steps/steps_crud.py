@@ -23,7 +23,11 @@ def step_impl(context, table_name):
     if not crud:
         crud = CRUD()
 
-    assert table_name in crud.show_tables()
+    if not table_name in crud.show_tables():
+        # Create the table and insert the test data
+        data = load_data_from_file('/app/assets/data.json')
+        data_dict = convert_json_to_data_dict(data)
+        crud.create('test', data_dict)
 
 @when(u'I call the insert method with the data')
 def step_impl(context):
@@ -49,6 +53,7 @@ def step_impl(context, symbol):
 @then(u'the data returned should be')
 def step_impl(context):
     row = context.active_outline
+    print('RETURNED', context.returned_data)
     assert row in context.returned_data
 
 @when(u'I call the update method with the set_data and the condition "Symbol = \'{symbol}\'"')
