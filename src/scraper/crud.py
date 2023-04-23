@@ -42,9 +42,13 @@ class CRUD:
         ]
         return rows_data
 
+    
     def _execute_insert_query_for_rows(self, cursor, query, rows_data):
-        print('CAVEMAN\n',rows_data)
         for row_data in rows_data:
+            if isinstance(row_data, (list, tuple)):
+                row_data = tuple(row_data)
+            else:
+                row_data = (row_data,)
             cursor.execute(query, row_data)
 
     def create_table(self, table, schema):
