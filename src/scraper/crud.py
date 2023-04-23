@@ -86,3 +86,8 @@ class CRUD:
     def close(self):
         self.cursor.close()
         self.connection.close()
+
+    def drop_table(self, table):
+        query = f"DROP TABLE IF EXISTS {table}"
+        self.cursor.execute(query)
+        self.connection.commit()
