@@ -2,7 +2,7 @@ FROM python:alpine
 
 WORKDIR /app
 
-COPY ./assets/api_requirements.txt .
-RUN pip install --no-cache-dir -r api_requirements.txt
+COPY ./assets/scraper_requirements.txt .
+RUN pip install --no-cache-dir -r scraper_requirements.txt
 
 CMD ["python", "./src/main.py"]
