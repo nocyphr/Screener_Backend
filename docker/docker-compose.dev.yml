@@ -45,6 +45,7 @@ services:
     volumes:
       - ../src/scraper/:/app/src
       - ./assets/data.json:/app/assets/data.json
+      - ../features/:/app/features
     networks: 
       - backend
 
