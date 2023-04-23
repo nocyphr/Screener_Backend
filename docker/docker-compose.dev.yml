@@ -33,12 +33,16 @@ services:
       - backend
 
 
-#   scraper:
-#     build: ./scraper
-#     depends_on:
-#       - db
-#     environment:
-#       SCRAPERAPI_KEY: your_scraperapi_key
+  scraper:
+    build: 
+      context: ./
+      dockerfile: docker.scraper.dockerfile
+    depends_on:
+      - db
+    env_file: ./assets/scraper.env
+    volumes:
+      - ../src/scraper/:/app/src
+      - .assets/data.json:/app/assets/data.json
 
 networks:
   backend:
