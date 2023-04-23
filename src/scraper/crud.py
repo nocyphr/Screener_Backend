@@ -72,16 +72,34 @@ class CRUD:
         raise ValueError(f'Unsupported data type: {type(value)}')
 
     def read(self, table, condition=None):
-        # Implement read method logic here
-        pass
+        query = f"SELECT * FROM {table}"
+        if condition:
+            query += f" WHERE {condition}"
+        
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+        column_names = [desc[0] for desc in self.cursor.description]
+
+        result = [dict(zip(column_names, row)) for row in rows]
+        return result
 
     def update(self, table, set_data, condition=None):
-        # Implement update method logic here
-        pass
+        set_clause = ', '.join([f"`{col}` = %s" for col in set_data.keys()])
+        query = f"UPDATE {table} SET {set_clause}"
+        if condition:
+            query += f" WHERE {condition}"
+        
+        self.cursor.execute(query, tuple(set_data.values()))
+        self.connection.commit()
 
     def delete(self, table, condition=None):
-        # Implement delete method logic here
-        pass
+        query = f"DELETE FROM {table}"
+        if condition:
+            query += f" WHERE {condition}"
+        
+        self.cursor.execute(query)
+        self.connection.commit()
+
 
     def close(self):
         self.cursor.close()
