@@ -61,9 +61,7 @@ def step_impl(context, symbol):
     set_data = {}
     for row in context.table:
         for header, value in row.as_dict().items():
-            if header not in set_data:
-                set_data[header] = []
-            set_data[header].append(value)
+            set_data[header] = value
 
     crud.update('test', set_data, f"Symbol = '{symbol}'")
 
@@ -71,7 +69,18 @@ def step_impl(context, symbol):
 def step_impl(context):
     updated_data = crud.read('test')
     row = context.active_outline
-    assert row in updated_data
+    row_dict = {key: value for key, value in row.as_dict().items()}
+    
+    # REFACTOR THIS
+    row_dict['Price'] = float(row_dict['Price'])
+    row_dict['MarketCap'] = int(row_dict['MarketCap'])
+    row_dict['MagicformulaIndex'] = int(row_dict['MagicformulaIndex'])
+    row_dict['AquirersMultiple'] = int(row_dict['AquirersMultiple'])
+    assert any(row_dict.items() <= data_row.items() for data_row in updated_data)
+
+
+
+
 
 @when(u'I call the delete method with the condition "Symbol = \'{symbol}\'"')
 def step_impl(context, symbol):
