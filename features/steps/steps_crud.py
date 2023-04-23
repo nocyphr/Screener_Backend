@@ -31,20 +31,40 @@ def step_impl(context, table_name):
 
 @when(u'I call the insert method with the data')
 def step_impl(context):
-    data_dict = {}
+    insert_data = []
     for row in context.table:
+        row_dict = {}
         for header, value in row.as_dict().items():
-            if header not in data_dict:
-                data_dict[header] = []
-            data_dict[header].append(value)
+            row_dict[header] = value
+        insert_data.append(row_dict)
 
-    crud.insert('test', data_dict)
+    context.insert_data = insert_data
+    crud.insert('test', insert_data)
+
+
+
 
 @then(u'the data should be inserted into the specified table')
 def step_impl(context):
     inserted_data = crud.read('test')
-    row = context.active_outline
-    assert row in inserted_data
+
+    for row_dict in context.insert_data:
+
+        # Convert numeric string values to their respective numeric types
+        row_dict['Price'] = float(row_dict['Price'])
+        row_dict['MarketCap'] = int(row_dict['MarketCap'])
+        row_dict['MagicformulaIndex'] = int(row_dict['MagicformulaIndex'])
+        row_dict['AquirersMultiple'] = int(row_dict['AquirersMultiple'])
+
+        print("INSERTED", inserted_data)
+        assert row_dict in inserted_data
+
+
+
+
+
+
+
 
 @when(u'I call the read method with the condition "Symbol = \'{symbol}\'"')
 def step_impl(context, symbol):
@@ -52,9 +72,18 @@ def step_impl(context, symbol):
 
 @then(u'the data returned should be')
 def step_impl(context):
-    row = context.active_outline
-    print('RETURNED', context.returned_data)
-    assert row in context.returned_data
+    for row in context.table:
+        row_dict = {key: value for key, value in row.as_dict().items()}
+        
+        # REFACTOR THIS
+        row_dict['Price'] = float(row_dict['Price'])
+        row_dict['MarketCap'] = int(row_dict['MarketCap'])
+        row_dict['MagicformulaIndex'] = int(row_dict['MagicformulaIndex'])
+        row_dict['AquirersMultiple'] = int(row_dict['AquirersMultiple'])
+
+        print("RETURNED", context.returned_data)
+        assert row_dict in context.returned_data
+
 
 @when(u'I call the update method with the set_data and the condition "Symbol = \'{symbol}\'"')
 def step_impl(context, symbol):
