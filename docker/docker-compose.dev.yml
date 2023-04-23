@@ -21,6 +21,7 @@ services:
 
   db:
     image: mysql:oracle
+    container_name: db
     env_file: ./assets/db.env
     restart: always
     # ports only exposed for manual checks via dbeaver
@@ -37,12 +38,17 @@ services:
     build: 
       context: ./
       dockerfile: docker.scraper.dockerfile
+    container_name: scraper
     depends_on:
       - db
     env_file: ./assets/scraper.env
     volumes:
       - ../src/scraper/:/app/src
       - ./assets/data.json:/app/assets/data.json
+    networks: 
+      - backend
 
 networks:
   backend:
+    driver: bridge
+    name: backend
