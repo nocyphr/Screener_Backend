@@ -91,3 +91,9 @@ class CRUD:
         query = f"DROP TABLE IF EXISTS {table}"
         self.cursor.execute(query)
         self.connection.commit()
+    
+    def show_tables(self):
+        self.cursor.execute("SHOW TABLES")
+        tables = [table[0] for table in self.cursor.fetchall()]
+        return tables
+
